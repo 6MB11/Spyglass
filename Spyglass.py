@@ -2,7 +2,7 @@
 
 
 # UPDATE THIS EVERY TIME A NEW RELEASE IS PACKAGED!
-VERSION = "1.4.5"
+VERSION = "1.5"
 
 # Spyglass
 # Source code by Derps aka Panzer Vier
@@ -326,6 +326,7 @@ for a in RegionList:
 
     # TODO: document specific key characters and colors that can be used to sort
     b = a
+    
     # KH: ~ indicates hittable. MB: Changed so each category has own character.
     # KH: yellow = passwordless and exec delegate
     if a in PWlessList and ExecDelegateList[counter] is True:
@@ -338,7 +339,7 @@ for a in RegionList:
         ws.cell(row=counter + 2, column=2).fill = greenFill
         b = a + '^'
     # KH: green =  passwordless and founderless
-    if a in UnfoundedList and a in PWlessList:
+    if a in PWlessList and a in UnfoundedList:
         ws.cell(row=counter + 2, column=1).fill = greenFill
         ws.cell(row=counter + 2, column=2).fill = greenFill
         b = a + '#'
