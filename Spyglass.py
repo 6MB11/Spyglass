@@ -2,11 +2,11 @@
 
 
 # UPDATE THIS EVERY TIME A NEW RELEASE IS PACKAGED!
-VERSION = "1.4.4"
+VERSION = "1.4.5"
 
 # Spyglass
 # Source code by Derps aka Panzer Vier
-# Modifications made by Khronion (KH)
+# Modifications made by Khronion (KH) and 6MB11 (MB) aka Flying Eagles
 
 import urllib
 import gzip
@@ -321,14 +321,19 @@ for a in RegionList:
     # KH: yellow = passwordless and exec delegate
     if a in PWlessList and ExecList[counter] is True:
         ws.cell(row=counter + 2, column=1).fill = yellowFill
-        ws.cell(row=counter + 2, column=2).fill = yellowFill
+        ws.cell(row=counter + 2, cfounderlessolumn=2).fill = yellowFill
         b = a + '~'
-    # KH: green = founderless and passwordless
+    # MB: green =  passwordless and non-exec founder
+    if a in PWlessList and ExecList[counter] is False:
+        ws.cell(row=counter + 2, column=1).fill = greenFill
+        ws.cell(row=counter + 2, column=2).fill = greenFill
+        b = a + '^'
+    # KH: green =  passwordless and founderless
     if a in UnfoundedList and a in PWlessList:
         ws.cell(row=counter + 2, column=1).fill = greenFill
         ws.cell(row=counter + 2, column=2).fill = greenFill
-        b = a + '~'
-    # KH: red = passwordless
+        b = a + '#'
+    # KH: red = passworded
     if a not in PWlessList:
         ws.cell(row=counter + 2, column=1).fill = redFill
         ws.cell(row=counter + 2, column=2).fill = redFill
