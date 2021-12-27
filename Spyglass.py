@@ -61,8 +61,9 @@ process_embassies = True
 log = True
 
 SpeedOverride = False
-MinorTime = 2640
-MajorTime = 3540
+#MB: Change default times to those circa. 2021/12/27
+MinorTime = 3551
+MajorTime = 5355
 
 now = datetime.now()
 YMD = '%s-%s-%s' % (now.year, now.month, now.day)
@@ -78,16 +79,16 @@ else:
     if query("Include region embassies? (y/n, defaults to y) ", ['y', 'n', '']) == 'n':
         process_embassies = False
 
-    # Update lengths are now set to 44m and 59m, per word of [v]
+    # Update lengths are now set to 44m and 59m, per word of [v]. #MB: Change default times to those circa. 2021/12/27
     if query("Do you want to manually specify update lengths? (y/n, defaults to n) ", ['y', 'n', '']) == 'y':
         try:
-            MinorTime = int(input("Minor Time, seconds (2640): "))
+            MinorTime = int(input("Minor Time, seconds (3551): "))
         except SyntaxError:
-            MinorTime = 2640
+            MinorTime = 3551
         try:
-            MajorTime = int(input("Major Time, seconds (3540): "))
+            MajorTime = int(input("Major Time, seconds (5355): "))
         except SyntaxError:
-            MajorTime = 3540
+            MajorTime = 5355
         SpeedOverride = True
 
 # set output filename
@@ -331,7 +332,7 @@ for a in RegionList:
     # KH: yellow = passwordless and exec delegate
     if a in PWlessList and ExecDelegateList[counter] is True:
         ws.cell(row=counter + 2, column=1).fill = yellowFill
-        ws.cell(row=counter + 2, cfounderlessolumn=2).fill = yellowFill
+        ws.cell(row=counter + 2, column=2).fill = yellowFill
         b = a + '~'
     # MB: green =  passwordless and non-exec founder
     if a in PWlessList and ExecFounderList[counter] is False:
