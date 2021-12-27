@@ -41,7 +41,7 @@ def query(text, options):
 # show help message and terminate
 if "-h" in sys.argv or "--help" in sys.argv:
     print "Spyglass {}: Generate NationStates region update timesheets.\n".format(VERSION)
-    print "Developed by Panzer Vier, with additions by Khronion\n"
+    print "Developed by Panzer Vier, with additions by Khronion and Flying Eagles\n"
     print "usage: {} [-h] [-n NATION] [-o OUTFILE] [-s | -l PATH]\n".format(sys.argv[0])
     print "Optional arguments:\n" \
           " -h           Show this help message and exit.\n" \
@@ -176,7 +176,9 @@ RegionWFEList = []
 RegionEmbassyList = []
 NumNationList = []
 DelVoteList = []
-ExecList = []
+ExecDelegateList = []
+# MB: Create executive founder list
+ExecFounderList = [] 
 MajorList = []
 
 # Sanitize our founderless regions list a wee bit, 'cause at the moment, it's xml, and xml is gross.
@@ -206,9 +208,16 @@ for EVENT in root.iter('DELEGATEVOTES'):
 for EVENT in root.iter('DELEGATEAUTH'):
     AuthString = str(EVENT.text)
     if AuthString[0] == 'X':
-        ExecList += [True]
+        ExecDelegateList += [True]
     else:
-        ExecList += [False]
+        ExecDelegateList += [False]
+# MB: Create executive founder list
+for EVENT in root.iter('FOUNDERAUTH'):
+    AuthString = str(EVENT.text)
+    if AuthString[0] == 'X':
+        ExecFounderList += [True]
+    else:
+        ExecFounderList += [False]
 
 # KH: pull major times from daily dump
 for EVENT in root.iter('LASTUPDATE'):
@@ -317,14 +326,14 @@ for a in RegionList:
 
     # TODO: document specific key characters and colors that can be used to sort
     b = a
-    # KH: ~ indicates hittable
+    # KH: ~ indicates hittable. MB: Changed so each category has own character.
     # KH: yellow = passwordless and exec delegate
-    if a in PWlessList and ExecList[counter] is True:
+    if a in PWlessList and ExecDelegateList[counter] is True:
         ws.cell(row=counter + 2, column=1).fill = yellowFill
         ws.cell(row=counter + 2, cfounderlessolumn=2).fill = yellowFill
         b = a + '~'
     # MB: green =  passwordless and non-exec founder
-    if a in PWlessList and ExecList[counter] is False:
+    if a in PWlessList and ExecFounderList[counter] is False:
         ws.cell(row=counter + 2, column=1).fill = greenFill
         ws.cell(row=counter + 2, column=2).fill = greenFill
         b = a + '^'
