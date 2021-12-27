@@ -4,7 +4,9 @@
 
 *Nationstates Sheet-generator for easily finding approximate update times*
 
-[Latest release](https://github.com/khronion/Spyglass/releases)
+[Latest release](https://github.com/6MB11/Spyglass/releases)
+
+[Versions 1.2-1.44](https://github.com/khronion/Spyglass/releases)
 
 ## Running Spyglass
 
@@ -23,11 +25,13 @@ As a reminder, times given by Spyglass are only approximate, since update time v
 Regions are color-coded and marked in columns A and B based on their value as targets. These markers can be used with
 Excel's built in filter function to quickly identify targets.
 
-- GREEN — Region is founderless or has a non-executive WA delegate. Region is also passwordless
+- GREEN — Region is founderless or has a non-executive founder. Region is also passwordless
+  - `#` — Region is founderless
+  - `^` — Region has a non-executive founder
 - YELLOW — Region has an executive WA delegate and is passwordless
+  - `~` — Region has an executive WA delegate
 - RED — Region is passworded
-- `~` — Region can be tagged
-- `*` — Region has non-executive WA delegate
+  - `*` — Region is passworded
 
 Additionally, regions are color-coded in column H based on their endorsement count.
 
