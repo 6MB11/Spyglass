@@ -79,7 +79,7 @@ else:
     if query("Include region embassies? (y/n, defaults to y) ", ['y', 'n', '']) == 'n':
         process_embassies = False
 
-    # Update lengths are now set to 44m and 59m, per word of [v]. #MB: Change default times to those circa. 2021/12/27
+    # Update lengths are now set to 44m and 59m, per word of [v]. # MB: Change default times to those circa. 2021/12/27
     if query("Do you want to manually specify update lengths? (y/n, defaults to n) ", ['y', 'n', '']) == 'y':
         try:
             MinorTime = int(input("Minor Time, seconds (3551): "))
@@ -114,7 +114,7 @@ else:
 # Set headers as required by NS TOS
 headers = {
     'User-Agent': 'Spyglass. Currently in use by {} (Authenticating). '
-                  'Source code: https://github.com/khronion/Spyglass'.format(UAgent)}
+                  'Source code: https://github.com/6MB11/Spyglass'.format(UAgent)}
 
 # Verify specified nation is valid -- terminate if not
 try:
@@ -123,7 +123,7 @@ try:
         headers)
     testhtml = urllib2.urlopen(testReq).read()
     headers = {
-        'User-Agent': 'Spyglass. Currently in use by ' + UAgent + '. Source code: https://github.com/khronion/Spyglass'}
+        'User-Agent': 'Spyglass. Currently in use by ' + UAgent + '. Source code: https://github.com/6MB11/Spyglass'}
 except urllib2.HTTPError:
     print "Nation not found. Be sure to input the name of a nation that actually exists."
     if log:
