@@ -6,7 +6,7 @@
 
 [Latest release](https://github.com/6MB11/Spyglass/releases)
 
-[Versions 1.2-1.44](https://github.com/khronion/Spyglass/releases)
+[Versions 1.2-1.4.4](https://github.com/khronion/Spyglass/releases)
 
 ## Running Spyglass
 
