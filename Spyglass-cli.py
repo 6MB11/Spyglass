@@ -12,13 +12,14 @@ from typing import List
 from xml.etree import ElementTree
 
 # UPDATE THIS EVERY TIME A NEW RELEASE IS PACKAGED
-VERSION = "2.0.1"
+VERSION = "2.1.1"
 
 # Spyglass
 # Source code by Devi aka Panzer Vier
 # Modifications made by Khronion (KH)
 # Ported to Python 3 with additional modifications by Zizou (Ziz)
 # Yay more modifications (Aav)
+# Non-exec founders by Flying Eagles (FE)
 
 log_path = "debug.log"
 
@@ -62,7 +63,7 @@ def download_dump() -> None:
     :return: None
     """
     dump_request = get(
-        "https://www.nationstates.net/pages/regions.xml.gz", stream=True
+        "https://www.nationstates.net/pages/regions.xml.gz", headers=headers, stream=True
     )
     with open("regions.xml.gz", "wb") as data_dump:
         for chunk in dump_request.iter_content(chunk_size=16 * 1024):
@@ -73,8 +74,9 @@ def download_dump() -> None:
 
 # Show help message and terminate
 if "-h" in argv or "--help" in argv:
-    print(f"Spyglass {VERSION}: Generate NationStates region update timesheets.\n")
-    print("Developed by Panzer Vier, with additions by Khronion, Zizou, and Aav\n")
+    print(
+        f"Flying Eagles's independent fork of Spyglass. Version: {VERSION}: Generate NationStates region update timesheets.\n")
+    print("Developed by Panzer Vier, with additions by Khronion, Zizou, and Aav, along with independent additions by Flying Eagles\n")
     print(f"usage: {argv[0]} [-h] [-n NATION] [-o OUTFILE] [-s | -l PATH]\n")
     print(
         """Optional arguments:
@@ -96,7 +98,7 @@ working directory."""
     raise SystemExit(1)
 
 interactive = True
-process_embassies = True
+process_embassies = False
 log = True
 
 SpeedOverride = False
@@ -110,12 +112,13 @@ if "-n" in argv:
     interactive = False
     UAgent = argv[argv.index("-n") + 1]
 else:
-    print(f"Spyglass {VERSION}: Generate NationStates region update timesheets.")
+    print(
+        f"Flying Eagles's independent fork of Spyglass. Version: {VERSION}: Generate NationStates region update timesheets.")
     UAgent = input("Nation Name: ")
     filename = f"SpyglassSheet{YMD}.xlsx"
 
-    if query("Include region embassies? (y/n, defaults to y) ", ["y", "n", ""]) == "n":
-        process_embassies = False
+    if query("Include region embassies? (y/n, defaults to n) ", ["y", "n", ""]) == "y":
+        process_embassies = True
 
     # Ziz: Update lengths are now 1.5hrs and 2.5hrs for minor and major respectively
     if (
@@ -157,7 +160,7 @@ else:
 
 # Set headers as required by NS TOS
 headers = {
-    "User-Agent": f"Spyglass/{VERSION} (github: https://github.com/Derpseh/Spyglass ; user:{UAgent}; Authenticating)"
+    "User-Agent": f"Flying Eagles's independent fork of Spyglass. Version: {VERSION} (github: https://github.com/6MB11/Spyglass ; user:{UAgent}; Authenticating)"
 }
 
 # Verify specified nation is valid -- terminate if not
@@ -168,7 +171,7 @@ try:
     )
     testreq.raise_for_status()
     headers = {
-        "User-Agent": f"Spyglass/{VERSION} (github: https://github.com/Derpseh/Spyglass ; user:{UAgent})"
+        "User-Agent": f"Flying Eagles's independent fork of Spyglass. Version: {VERSION} (github: https://github.com/6MB11/Spyglass ; user:{UAgent})"
     }
 except HTTPError:
     print(
@@ -236,7 +239,9 @@ RegionWFEList = list()
 RegionEmbassyList = list()
 NumNationList = list()
 DelVoteList = list()
-ExecList = list()
+ExecDelList = list()
+# FE: Executive founder list
+ExecFouList = list()
 MajorList = list()
 
 # Sanitize our founderless regions list a wee bit, 'cause at the moment, it's xml, and xml is gross.
@@ -265,19 +270,30 @@ names = [region.find("NAME") for region in region_list]
 num_nations = [region.find("NUMNATIONS") for region in region_list]
 delvotes = [region.find("DELEGATEVOTES") for region in region_list]
 delauth = [region.find("DELEGATEAUTH") for region in region_list]
-for name, nation_count, del_votes, auth in zip(
-        names, num_nations, delvotes, delauth
+# FE: Setting up founder authority system
+fouauth = [region.find("FOUNDERAUTH") for region in region_list]
+for name, nation_count, del_votes, delauth, fouauth in zip(
+        names, num_nations, delvotes, delauth, fouauth
 ):
     RegionList.append(name.text)
     UrlString = f'=HYPERLINK("https://www.nationstates.net/region={name.text}")'
     RegionURLList.append(UrlString.replace(" ", "_"))
     NumNationList.append(int(nation_count.text))
     DelVoteList.append(int(del_votes.text))
-    AuthString = auth.text
-    if AuthString[0] == "X":
-        ExecList.append(True)
+    DelAuthString = delauth.text
+    if DelAuthString[0] == "X":
+        ExecDelList.append(True)
     else:
-        ExecList.append(False)
+        ExecDelList.append(False)
+    FouAuthString = fouauth.text
+# FE: Identify regions with a founder that is non-executive
+    if FouAuthString:
+        if FouAuthString[0] == "X":
+            ExecFouList.append(True)
+        else:
+            ExecFouList.append(False)
+    else:
+        ExecFouList.append(False)
 
 # KH: pull major times from daily dump
 # Aav: Refactored into listcomp 3/17/2022
@@ -393,10 +409,15 @@ for counter, a in enumerate(RegionList):
     b = a
     # KH: ~ indicates hittable
     # KH: yellow = passwordless and exec delegate
-    if a in pwless_list and ExecList[counter]:
+    if a in pwless_list and ExecDelList[counter]:
         ws.cell(row=counter + 2, column=1).fill = yellowFill
         ws.cell(row=counter + 2, column=2).fill = yellowFill
         b = f"{a}~"
+    # FE: green = passwordless and non-exec founder
+    if a in pwless_list and not ExecFouList[counter]:
+        ws.cell(row=counter + 2, column=1).fill = greenFill
+        ws.cell(row=counter + 2, column=2).fill = greenFill
+        b = f"{a}^"
     # KH: green = founderless and passwordless
     if a in unfounded_list and a in pwless_list:
         ws.cell(row=counter + 2, column=1).fill = greenFill
