@@ -286,7 +286,7 @@ for name, nation_count, del_votes, delauth, fouauth in zip(
     else:
         ExecDelList.append(False)
     FouAuthString = fouauth.text
-    #FE: Identify regions with a founder that is non-executive
+# FE: Identify regions with a founder that is non-executive
     if FouAuthString:
         if FouAuthString[0] == "X":
             ExecFouList.append(True)

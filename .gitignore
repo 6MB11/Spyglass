@@ -2,6 +2,13 @@
 ### VirtualEnv template
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+
+*.dll
+*.gsheet
+*.gz
+*.tmp
+.tmp.driveupload/
+
 .Python
 [Bb]in
 [Ii]nclude
@@ -11,8 +18,6 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
-.dll
-*.dll
 pip-selfcheck.json
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -119,10 +124,8 @@ venv.bak/
 .mypy_cache/
 
 .xlsx
-.gsheet
 regions.xml
 regions.xml.gz
 .idea
 *.xlsx
-*.gsheet
 /setup.py
