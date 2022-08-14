@@ -11,6 +11,8 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
+.dll
+*.dll
 pip-selfcheck.json
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -117,8 +119,10 @@ venv.bak/
 .mypy_cache/
 
 .xlsx
+.gsheet
 regions.xml
 regions.xml.gz
 .idea
 *.xlsx
+*.gsheet
 /setup.py
