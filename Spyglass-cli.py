@@ -37,7 +37,8 @@ def write_log(to_write: str) -> None:
     """
     if log:
         with open(log_path, "a") as out:
-            out.write(datetime.now().strftime(f"[%Y-%m-%d %H:%M:%S] {to_write}\n"))
+            out.write(datetime.now().strftime(
+                f"[%Y-%m-%d %H:%M:%S] {to_write}\n"))
     else:
         pass
 
@@ -220,7 +221,8 @@ else:
 
 redFill = PatternFill(start_color=RED, end_color=RED, fill_type="solid")
 greenFill = PatternFill(start_color=GREEN, end_color=GREEN, fill_type="solid")
-yellowFill = PatternFill(start_color=YELLOW, end_color=YELLOW, fill_type="solid")
+yellowFill = PatternFill(
+    start_color=YELLOW, end_color=YELLOW, fill_type="solid")
 
 # Un-gzipping
 # Ziz: Now we can just decompress the dump and hand it to the parser without writing to disk
@@ -304,7 +306,8 @@ for wfe in [d.find("FACTBOOK") for d in region_list]:
     text = wfe.text
     try:
         if text[0] in ["=", "+", "-", "@"]:
-            text = f"'{text}"  # IMPORTANT: prevent excel from parsing WFEs as formulas
+            # IMPORTANT: prevent excel from parsing WFEs as formulas
+            text = f"'{text}"
         RegionWFEList.append(text)
     except TypeError:  # no WFE
         RegionWFEList.append("")
