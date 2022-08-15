@@ -51,4 +51,4 @@ Spyglass version 2.0 and onward are licensed under the terms of the [GNU General
 
 ## Credits
 
-Spyglass was originally developed by Devi and is now maintained by [Devi](https://github.com/Derpseh/), [Khronion](https://github.com/khronion), [Zizou](https://github.com/Aptenodyte), and [Aav](https://github.com/AavHRF). The icon was contributed by [Vleerian](https://github.com/vleerian/). This version of Spyglass is an independent addition to it
+Spyglass was originally developed by Devi and is now maintained by [Devi](https://github.com/Derpseh/), [Khronion](https://github.com/khronion), [Zizou](https://github.com/Aptenodyte), and [Aav](https://github.com/AavHRF). The icon was contributed by [Vleerian](https://github.com/vleerian/). This version of Spyglass is an independent addition to it.
