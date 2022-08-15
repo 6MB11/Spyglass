@@ -12,7 +12,7 @@ from typing import List
 from xml.etree import ElementTree
 
 # UPDATE THIS EVERY TIME A NEW RELEASE IS PACKAGED
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 
 # Spyglass
 # Source code by Devi aka Panzer Vier
