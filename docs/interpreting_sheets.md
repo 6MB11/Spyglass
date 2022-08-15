@@ -35,6 +35,7 @@ Columns A and B are color-coded and suffixed based on a region's relevance to th
 | Yellow (color) | Region has an executive founder and an executive world assembly delegate, but has no password                                                             |  
 | Red (color)    | Region has a non-executive world assembly delegate and has no password                                                                                     |
 | `~` (suffix)   | Region is potentially subject to military gameplay actions.<br/>_Has an executive world assembly delegate and no password. May or may not have a founder._ |
+| `^` (suffix)   | Region is potentially subject to military gameplay actions.<br/>_Has an non-executive founder._ |
 | `*` (suffix)   | Region is not subject to military gameplay actions.<br/>_Has a non-executive world assembly delegate._                                                     |
 
 Additionally, regions with zero world assembly endorsements are color-coded red in column H.
