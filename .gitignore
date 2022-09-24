@@ -11,6 +11,7 @@
 *.zip
 
 .tmp.driveupload/
+.vscode/
 altgraph*/
 certifi/
 cffi*/
