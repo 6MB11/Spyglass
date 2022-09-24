@@ -12,7 +12,7 @@ from typing import List
 from xml.etree import ElementTree
 
 # UPDATE THIS EVERY TIME A NEW RELEASE IS PACKAGED
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 
 # Spyglass
 # Source code by Devi aka Panzer Vier
@@ -417,16 +417,16 @@ for counter, a in enumerate(RegionList):
         ws.cell(row=counter + 2, column=1).fill = yellowFill
         ws.cell(row=counter + 2, column=2).fill = yellowFill
         b = f"{a}~"
-    # FE: green = passwordless and non-exec founder
+    # FE: green = non-exec founder and passwordless
     if a in pwless_list and not ExecFouList[counter]:
         ws.cell(row=counter + 2, column=1).fill = greenFill
         ws.cell(row=counter + 2, column=2).fill = greenFill
-        b = f"{a}^"
+        b = f"{a}#"
     # KH: green = founderless and passwordless
-    if a in unfounded_list and a in pwless_list:
+    if a in pwless_list and a in unfounded_list:
         ws.cell(row=counter + 2, column=1).fill = greenFill
         ws.cell(row=counter + 2, column=2).fill = greenFill
-        b = f"{a}~"
+        b = f"{a}^"
     # KH: red = passwordless
     if a not in pwless_list:
         ws.cell(row=counter + 2, column=1).fill = redFill
