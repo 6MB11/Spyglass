@@ -199,15 +199,16 @@ if interactive:
                     "Existing data dump found. Do you want to re-download the latest dump? (y/n, defaults to y) ",
                     ["y", "n", ""],
                 )
-                == "y"
+                == "n"
         ):
+            write_log("INFO Using data dump already present...")
+            print("Using current dump...")
+
+        else:
             write_log("INFO Found data dump, but re-downloading the latest..")
             print("Pulling data dump...")
             download_dump()
             write_log("INFO Download complete!")
-        else:
-            write_log("INFO Using data dump already present...")
-            print("Using current dump...")
     else:
         write_log("INFO No existing data dump found, downloading latest...")
         print("No existing data dump found. Pulling data dump...")
