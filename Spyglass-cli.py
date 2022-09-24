@@ -411,7 +411,6 @@ for counter, a in enumerate(RegionList):
     # do filtering by colour
 
     b = a
-    # KH: ~ indicates hittable
     # KH: yellow = passwordless and exec delegate
     if a in pwless_list and ExecDelList[counter]:
         ws.cell(row=counter + 2, column=1).fill = yellowFill
